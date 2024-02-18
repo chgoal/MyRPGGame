@@ -23,7 +23,9 @@ void USaveGameBarUserWidget::UpdateSaveGameBar(UMyRPGSaveGame* RPGSaveGame)
 	{
 		if (SaveTime && SaveMsg)
 		{
-			SaveTime->SetText(FText::FromString(MyRPGSaveGame->SaveTime));
+			FText Time;
+			TransformLoadTime(MyRPGSaveGame->SaveTime,Time);
+			SaveTime->SetText(Time);
 			TArray<FStringFormatArg> args;
 			args.Add(FMath::RoundToInt(MyRPGSaveGame->Health));
 			args.Add(FMath::RoundToInt(MyRPGSaveGame->Mana));
@@ -54,4 +56,32 @@ void USaveGameBarUserWidget::LoadGame()
         	Controller->LoadGame();
         }
 	}
+}
+
+bool USaveGameBarUserWidget::TransformLoadTime(FString TimeString,FText& TimeText)
+{
+	FString LeftS;
+	FString RightS;
+	if (TimeString.Split(TEXT("-"),&LeftS,&RightS))
+	{
+		TArray<FString> LeftSArray;
+		TArray<FString> RightSArray;
+		TArray<FStringFormatArg> LArgs;
+		TArray<FStringFormatArg> RArgs;
+		LeftS.ParseIntoArray(LeftSArray,TEXT("."),false);
+		RightS.ParseIntoArray(RightSArray,TEXT("."),false);
+		for (auto It: LeftSArray)
+		{
+			LArgs.Add(FStringFormatArg(It));
+		}
+		for (auto It: RightSArray)
+		{
+			RArgs.Add(FStringFormatArg(It));
+		}
+		FString Date = FString::Format(TEXT("{0}年{1}月{2}日   "),LArgs);
+		FString Time = FString::Format(TEXT("{0}点{1}分{2}秒"),RArgs);
+		TimeText = FText::FromString(Date.Append(Time));
+		return true;
+	}
+	return false;
 }

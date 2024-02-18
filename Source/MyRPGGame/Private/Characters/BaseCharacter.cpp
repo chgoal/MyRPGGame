@@ -280,11 +280,8 @@ EHitDirection ABaseCharacter::CalHitDirection()
 
 void ABaseCharacter::SaveLoad(USaveGame* SaveGame)
 {
-	if (UMyRPGSaveGame* MyRPGSaveGame = Cast<UMyRPGSaveGame>(SaveGame))
-	{
-		
-	}	
 }
+
 
 void ABaseCharacter::WeaponGameplayTags()
 {

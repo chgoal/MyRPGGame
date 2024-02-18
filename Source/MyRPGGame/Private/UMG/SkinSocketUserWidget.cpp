@@ -100,6 +100,7 @@ void USkinSocketUserWidget::NativeOnMouseEnter(const FGeometry& InGeometry, cons
 	}
 	if (DescribeWidget)
 	{
+		DescribeWidget->SetDescribeID(EItemType::EPT_Skin,SavedID);
 		if (DescribeWidget->IsInViewport())
 		{
 			return;

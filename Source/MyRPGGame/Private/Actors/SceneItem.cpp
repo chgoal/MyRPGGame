@@ -32,19 +32,14 @@ void ASceneItem::BeginPlay()
 	InitActor();
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle,this,&ASceneItem::BgSpawn,0.6f);
-	if (ARPGPlayerController* Controller = Cast<ARPGPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(),0)))
-	{
-		Controller->OnReloadSaveGame.AddUObject(this,&ASceneItem::BgSpawn);
-	}
+	
 	
 }
 
 void ASceneItem::BgSpawn()
 {
-	UE_LOG(LogTemp, Log, TEXT("BgSpawn"))
 	if (UWeaponSubsystem* WeaponSubsystem = GetWorld()->GetGameInstance()->GetSubsystem<UWeaponSubsystem>())
 	{
-		UE_LOG(LogTemp, Log, TEXT("WeaponSubsystem"))
 		if (WeaponSubsystem->Check_IfDestroyed(ActorID))
 		{
 			Destroy();

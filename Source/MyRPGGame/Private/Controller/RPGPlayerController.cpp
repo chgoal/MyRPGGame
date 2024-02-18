@@ -102,9 +102,10 @@ void ARPGPlayerController::LoadGame()
 		{
 			if (APlayerCharacter* PlayerCharacter = Cast<APlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(),0)))
 			{
-				
-				PlayerCharacter->LoadSave(T_WeaponSubsystem->GetSelectSaveGame());
+				UMyRPGSaveGame* T_RPGSaveGame = T_WeaponSubsystem->GetSelectSaveGame();
+				PlayerCharacter->LoadSave(T_RPGSaveGame);
 			}
+			//T_WeaponSubsystem->SetSelectSaveGame(nullptr);
 		}
 	}
 }

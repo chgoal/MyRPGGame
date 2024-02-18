@@ -11,6 +11,7 @@
 #include "ActorComponent/PackageComponent.h"
 #include "ActorComponent/TargetComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Data/Attribute/CharacterAttributeSet.h"
 #include "SaveGame/MyRPGSaveGame.h"
 #include "UMG/PackageUserWidget.h"
 #include "UMG/PlayerHUD.h"
@@ -97,6 +98,10 @@ void APlayerCharacter::LoadSave(USaveGame* SaveGame)
 	{
 		SetActorLocation(MyRPGSaveGame->CharacterLocation);
 		SetActorRotation(MyRPGSaveGame->CharacterRotator);
+		CharacterAttribute->SetHealth(MyRPGSaveGame->Health);
+		CharacterAttribute->SetMana(MyRPGSaveGame->Mana);
+		CharacterAttribute->SetStamina(MyRPGSaveGame->Stamina);
+		
 		if (PackageComponent)
 		{
 			PackageComponent->LoadPackage(MyRPGSaveGame->PackageItem,MyRPGSaveGame->SkinMapItem,MyRPGSaveGame->PropsMapItem,MyRPGSaveGame->WeaponMapItem);
@@ -271,7 +276,6 @@ void APlayerCharacter::ResetAttack()
 
 void APlayerCharacter::ForTesting()
 {
-	UE_LOG(LogTemp, Log, TEXT("Testing"))
 	GetPackageComponent()->PrintPackageItem();
 }
 

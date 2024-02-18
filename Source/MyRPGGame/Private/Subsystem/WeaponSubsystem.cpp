@@ -139,6 +139,10 @@ void UWeaponSubsystem::SetSelectSaveGame(UMyRPGSaveGame* MyRPGSaveGame)
 	{
 		DestroyedActors = SelectSaveGame->DestroyedActors;
 	}
+	else
+	{
+		DestroyedActors.Empty();
+	}
 }
 
 void UWeaponSubsystem::ClearSelectSaveGame()

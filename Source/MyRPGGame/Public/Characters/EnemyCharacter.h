@@ -72,13 +72,19 @@ protected:
 	TArray<APatrolPoint*> PatrolPoints;
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	ASceneActor* SitActor;
+
+	//加载
+	UPROPERTY(EditAnywhere)
+	FName EnemyID;
 	
 public:
 	//功能类函数
 	virtual void Select() override;
 	virtual void CancelSelect() override;
+	virtual void Destroyed() override;
 	virtual UAimUserWidget* GetTargetWidget() const override;
 	void Initialize();
+	void BgSpawn();
 	void BeginInitialize();
 	UFUNCTION(BlueprintCallable)
 	void SetWeaponVisibility(EWeaponHide HideState);

@@ -34,4 +34,6 @@ public:
 	void OnDoubleClick();
 	UFUNCTION()
 	void LoadGame();
+	UFUNCTION()
+	bool TransformLoadTime(FString TimeString,FText& TimeText);
 };

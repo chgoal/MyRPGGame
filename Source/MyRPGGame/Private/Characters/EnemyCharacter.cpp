@@ -31,7 +31,8 @@ void AEnemyCharacter::BeginPlay()
 	WeaponSocketName = TEXT("Sword");
 	BackWeaponSocketName = TEXT("BackSword");
 	BeginInitialize();
-	
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle,this,&AEnemyCharacter::BgSpawn,0.6f);
 }
 
 float AEnemyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator,
@@ -103,6 +104,15 @@ void AEnemyCharacter::CancelSelect()
 	}
 }
 
+void AEnemyCharacter::Destroyed()
+{
+	if (GetWorld()->GetGameInstance()->GetSubsystem<UWeaponSubsystem>())
+	{
+		GetWorld()->GetGameInstance()->GetSubsystem<UWeaponSubsystem>()->DestroyItem(EnemyID);
+	}
+	Super::Destroyed();
+}
+
 UAimUserWidget* AEnemyCharacter::GetTargetWidget() const
 {
 	return ActiveTargetWidget;
@@ -115,6 +125,17 @@ void AEnemyCharacter::Initialize()
 	
 	FindEnemy->SetupAttachment(GetMesh());
 	DecalComponent->SetupAttachment(CameraComponent);
+}
+
+void AEnemyCharacter::BgSpawn()
+{
+	if (UWeaponSubsystem* WeaponSubsystem = GetWorld()->GetGameInstance()->GetSubsystem<UWeaponSubsystem>())
+	{
+		if (WeaponSubsystem->Check_IfDestroyed(EnemyID))
+		{
+			Destroy();
+		}
+	}
 }
 
 void AEnemyCharacter::BeginInitialize()
